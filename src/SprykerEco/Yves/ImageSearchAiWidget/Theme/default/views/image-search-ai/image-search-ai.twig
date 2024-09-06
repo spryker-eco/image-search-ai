@@ -1,0 +1,17 @@
+{% extends template('widget') %}
+
+{% define config = {
+    name: 'image-search-ai',
+    jsName: 'js-image-search-ai',
+} %}
+
+{% block body %}
+    <button type="button" class="{{ config.name }}__button {{ config.name }}__button--image-search {{ config.jsName }}__button--image-search">
+        {% include atom('icon') with {
+            modifiers: ['big'],
+            data: {
+                name: 'photo',
+            },
+        } only %}
+    </button>
+{% endblock %}
