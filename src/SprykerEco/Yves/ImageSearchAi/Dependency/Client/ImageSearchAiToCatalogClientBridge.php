@@ -28,7 +28,7 @@ class ImageSearchAiToCatalogClientBridge implements ImageSearchAiToCatalogClient
      *
      * @return array<string, mixed>
      */
-    public function catalogSuggestSearch($searchString, array $requestParameters = []): array
+    public function catalogSuggestSearch(string $searchString, array $requestParameters = []): array
     {
         return $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
     }

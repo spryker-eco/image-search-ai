@@ -26,7 +26,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
     /**
      * @var \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig
      */
-    protected ImageSearchAiConfig $config;
+    protected ImageSearchAiConfig $imageSearchAiConfig;
 
     /**
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
@@ -37,7 +37,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
         ImageSearchAiConfig $imageSearchAiConfig
     ) {
         $this->validator = $validator;
-        $this->config = $imageSearchAiConfig;
+        $this->imageSearchAiConfig = $imageSearchAiConfig;
     }
 
     /**
@@ -90,11 +90,11 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
         $mimeType = $mimeTypes->guessMimeType($tmpFilename);
         unlink($tmpFilename);
 
-        if (!in_array($mimeType, $this->config->getAllowedMimeTypes(), true)) {
+        if (!in_array($mimeType, $this->imageSearchAiConfig->getAllowedMimeTypes(), true)) {
             $context->buildViolation(sprintf(
                 'Invalid mime type %s. Accepted types are %s.',
                 $mimeType,
-                implode(', ', $this->config->getAllowedMimeTypes()),
+                implode(', ', $this->imageSearchAiConfig->getAllowedMimeTypes()),
             ))
                 ->atPath('image')
                 ->addViolation();
