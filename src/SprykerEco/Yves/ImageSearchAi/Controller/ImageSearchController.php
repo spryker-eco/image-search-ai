@@ -52,7 +52,7 @@ class ImageSearchController extends AbstractController
         if (
             !isset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]) ||
             !$this->getFactory()->getCsrfTokenManager()->isTokenValid(
-                new CsrfToken(static::CSRF_TOKEN_ID, $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN])
+                new CsrfToken(static::CSRF_TOKEN_ID, $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]),
             )
         ) {
             return $this->createAjaxErrorResponse([
