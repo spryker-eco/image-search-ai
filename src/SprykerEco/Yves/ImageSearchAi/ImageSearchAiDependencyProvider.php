@@ -37,6 +37,11 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_OPEN_AI = 'CLIENT_OPEN_AI';
 
     /**
+     * @var string
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -46,6 +51,7 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCatalogClient($container);
         $container = $this->addOpenAiClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addCsrfProviderService($container);
 
         return $container;
     }
@@ -97,6 +103,20 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
                 return new ImageSearchAiToOpenAiClientBridge($container->getLocator()->openAi()->client());
             },
         );
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
+        });
 
         return $container;
     }

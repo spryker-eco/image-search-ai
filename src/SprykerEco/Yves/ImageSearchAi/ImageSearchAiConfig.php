@@ -21,7 +21,7 @@ class ImageSearchAiConfig extends AbstractBundleConfig
      *
      * @return array<string>
      */
-    public static function getAllowedMimeTypes(): array
+    public function getAllowedMimeTypes(): array
     {
         return [
             'image/jpeg',

@@ -24,25 +24,34 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
     protected ValidatorInterface $validator;
 
     /**
-     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
+     * @var \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig
      */
-    public function __construct(ValidatorInterface $validator)
-    {
+    protected ImageSearchAiConfig $config;
+
+    /**
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
+     * @param \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig $imageSearchAiConfig
+     */
+    public function __construct(
+        ValidatorInterface $validator,
+        ImageSearchAiConfig $imageSearchAiConfig
+    ) {
         $this->validator = $validator;
+        $this->config = $imageSearchAiConfig;
     }
 
     /**
-     * @param array<string, string> $requestBodyContent
+     * @param array<string, string> $imageContent
      *
      * @return \Symfony\Component\Validator\ConstraintViolationListInterface
      */
-    public function validate(array $requestBodyContent): ConstraintViolationListInterface
+    public function validate(array $imageContent): ConstraintViolationListInterface
     {
         $constraint = new Collection(
             $this->getBase64ImageFieldValidationConstraints(),
         );
 
-        return $this->validator->validate($requestBodyContent, $constraint);
+        return $this->validator->validate($imageContent, $constraint);
     }
 
     /**
@@ -53,7 +62,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
         return [
             'image' => [
                 new NotBlank(),
-                new Callback([static::class, 'validateIsBase64']),
+                new Callback(['callback' => [$this, 'validateIsBase64']]),
             ],
         ];
     }
@@ -64,7 +73,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
      *
      * @return void
      */
-    public static function validateIsBase64(mixed $value, ExecutionContextInterface $context): void
+    public function validateIsBase64(mixed $value, ExecutionContextInterface $context): void
     {
         $value = preg_replace('#data:image/[^;]+;base64,#', '', $value);
 
@@ -81,11 +90,11 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
         $mimeType = $mimeTypes->guessMimeType($tmpFilename);
         unlink($tmpFilename);
 
-        if (!in_array($mimeType, ImageSearchAiConfig::getAllowedMimeTypes(), true)) {
+        if (!in_array($mimeType, $this->config->getAllowedMimeTypes(), true)) {
             $context->buildViolation(sprintf(
                 'Invalid mime type %s. Accepted types are %s.',
                 $mimeType,
-                implode(', ', ImageSearchAiConfig::getAllowedMimeTypes()),
+                implode(', ', $this->config->getAllowedMimeTypes()),
             ))
                 ->atPath('image')
                 ->addViolation();

@@ -26,14 +26,14 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
 
     /**
      * @param \SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToOpenAiClientInterface $openAiClient
-     * @param \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig $config
+     * @param \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig $imageSearchAiConfig
      */
     public function __construct(
         ImageSearchAiToOpenAiClientInterface $openAiClient,
-        ImageSearchAiConfig $config
+        ImageSearchAiConfig $imageSearchAiConfig
     ) {
         $this->openAiClient = $openAiClient;
-        $this->config = $config;
+        $this->config = $imageSearchAiConfig;
     }
 
     /**

@@ -15,5 +15,5 @@ interface ImageSearchAiToCatalogClientInterface
      *
      * @return array<string, mixed>
      */
-    public function catalogSuggestSearch($searchString, array $requestParameters = []);
+    public function catalogSuggestSearch($searchString, array $requestParameters = []): array;
 }

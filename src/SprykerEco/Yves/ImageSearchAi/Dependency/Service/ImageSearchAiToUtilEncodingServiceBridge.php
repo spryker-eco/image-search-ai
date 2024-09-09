@@ -7,14 +7,12 @@
 
 namespace SprykerEco\Yves\ImageSearchAi\Dependency\Service;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-
 class ImageSearchAiToUtilEncodingServiceBridge implements ImageSearchAiToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
-    protected UtilEncodingServiceInterface $utilEncodingService;
+    protected $utilEncodingService;
 
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService

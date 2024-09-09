@@ -14,6 +14,7 @@ use SprykerEco\Yves\ImageSearchAi\Dependency\Service\ImageSearchAiToUtilEncoding
 use SprykerEco\Yves\ImageSearchAi\Transformer\ImageToSearchTermsTransformer;
 use SprykerEco\Yves\ImageSearchAi\Validator\Base64ImageValidator;
 use SprykerEco\Yves\ImageSearchAi\Validator\Base64ImageValidatorInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -56,6 +57,7 @@ class ImageSearchAiFactory extends AbstractFactory
     {
         return new Base64ImageValidator(
             $this->createValidator(),
+            $this->getConfig(),
         );
     }
 
@@ -70,8 +72,16 @@ class ImageSearchAiFactory extends AbstractFactory
     /**
      * @return \SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToOpenAiClientInterface
      */
-    protected function getOpenAiClient(): ImageSearchAiToOpenAiClientInterface
+    public function getOpenAiClient(): ImageSearchAiToOpenAiClientInterface
     {
         return $this->getProvidedDependency(ImageSearchAiDependencyProvider::CLIENT_OPEN_AI);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(ImageSearchAiDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

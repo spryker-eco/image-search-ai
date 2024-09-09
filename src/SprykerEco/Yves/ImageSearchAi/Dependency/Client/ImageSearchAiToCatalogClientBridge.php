@@ -7,14 +7,12 @@
 
 namespace SprykerEco\Yves\ImageSearchAi\Dependency\Client;
 
-use Spryker\Client\Catalog\CatalogClientInterface;
-
 class ImageSearchAiToCatalogClientBridge implements ImageSearchAiToCatalogClientInterface
 {
     /**
      * @var \Spryker\Client\Catalog\CatalogClientInterface
      */
-    protected CatalogClientInterface $catalogClient;
+    protected $catalogClient;
 
     /**
      * @param \Spryker\Client\Catalog\CatalogClientInterface $catalogClient
@@ -30,7 +28,7 @@ class ImageSearchAiToCatalogClientBridge implements ImageSearchAiToCatalogClient
      *
      * @return array<string, mixed>
      */
-    public function catalogSuggestSearch($searchString, array $requestParameters = [])
+    public function catalogSuggestSearch($searchString, array $requestParameters = []): array
     {
         return $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
     }
