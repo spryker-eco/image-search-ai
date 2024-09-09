@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Yves\ImageSearchAi\Controller;
 
+use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\ImageSearchFindTermsErrorMessageTransfer;
 use Generated\Shared\Transfer\ImageSearchFindTermsErrorResponseTransfer;
 use Generated\Shared\Transfer\ImageSearchFindTermsResponseTransfer;
@@ -27,6 +28,11 @@ class ImageSearchController extends AbstractController
     protected const REQUEST_BODY_CONTENT_KEY_IMAGE = 'image';
 
     /**
+     * @var string
+     */
+    protected const REQUEST_BODY_CONTENT_KEY_TOKEN = '_token';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -36,6 +42,14 @@ class ImageSearchController extends AbstractController
         $requestBodyContent = $this->getFactory()
             ->getUtilEncodingService()
             ->decodeJson((string)$request->getContent(), true);
+
+        if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN])) {
+            return $this->createAjaxErrorResponse([
+                'error' => 'form.csrf.error.text',
+            ], HttpCode::BAD_REQUEST);
+        }
+
+        unset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]);
 
         $errors = $this->getFactory()->createBase64ImageValidator()->validate($requestBodyContent);
         if (count($errors)) {
@@ -67,5 +81,16 @@ class ImageSearchController extends AbstractController
             'searchUrl' => Url::generate('/search', ['q' => $searchString])->build(),
             'firstMatchProductUrl' => Url::generate($searchResults['suggestionByType']['product_abstract'][0]['url'])->build(),
         ]);
+    }
+
+    /**
+     * @param array<string, mixed> $errorData
+     * @param int $statusCode
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createAjaxErrorResponse(array $errorData, int $statusCode): JsonResponse
+    {
+        return $this->jsonResponse($errorData, $statusCode);
     }
 }

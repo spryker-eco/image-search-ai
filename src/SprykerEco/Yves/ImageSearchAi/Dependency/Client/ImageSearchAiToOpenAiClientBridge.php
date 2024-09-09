@@ -9,14 +9,13 @@ namespace SprykerEco\Yves\ImageSearchAi\Dependency\Client;
 
 use Generated\Shared\Transfer\OpenAiChatRequestTransfer;
 use Generated\Shared\Transfer\OpenAiChatResponseTransfer;
-use SprykerEco\Client\OpenAi\OpenAiClientInterface;
 
 class ImageSearchAiToOpenAiClientBridge implements ImageSearchAiToOpenAiClientInterface
 {
     /**
      * @var \SprykerEco\Client\OpenAi\OpenAiClientInterface
      */
-    protected OpenAiClientInterface $openAiClient;
+    protected $openAiClient;
 
     /**
      * @param \SprykerEco\Client\OpenAi\OpenAiClientInterface $openAiClient

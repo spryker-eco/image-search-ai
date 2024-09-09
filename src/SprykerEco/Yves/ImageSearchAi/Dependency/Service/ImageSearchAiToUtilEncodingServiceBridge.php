@@ -7,14 +7,12 @@
 
 namespace SprykerEco\Yves\ImageSearchAi\Dependency\Service;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-
 class ImageSearchAiToUtilEncodingServiceBridge implements ImageSearchAiToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
-    protected UtilEncodingServiceInterface $utilEncodingService;
+    protected $utilEncodingService;
 
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
@@ -32,7 +30,7 @@ class ImageSearchAiToUtilEncodingServiceBridge implements ImageSearchAiToUtilEnc
      *
      * @return object|array<mixed>|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): ?array
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }

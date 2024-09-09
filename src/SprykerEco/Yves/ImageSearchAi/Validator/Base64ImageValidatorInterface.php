@@ -12,9 +12,9 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 interface Base64ImageValidatorInterface
 {
     /**
-     * @param array<string, string> $requestBodyContent
+     * @param array<string, string> $imageContent
      *
      * @return \Symfony\Component\Validator\ConstraintViolationListInterface
      */
-    public function validate(array $requestBodyContent): ConstraintViolationListInterface;
+    public function validate(array $imageContent): ConstraintViolationListInterface;
 }
