@@ -16,6 +16,7 @@ use Spryker\Yves\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \SprykerEco\Yves\ImageSearchAi\ImageSearchAiFactory getFactory()
@@ -33,6 +34,11 @@ class ImageSearchController extends AbstractController
     protected const REQUEST_BODY_CONTENT_KEY_TOKEN = '_token';
 
     /**
+     * @var string
+     */
+    protected const CSRF_TOKEN_ID = 'image_search_ai_csrf';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -43,7 +49,12 @@ class ImageSearchController extends AbstractController
             ->getUtilEncodingService()
             ->decodeJson((string)$request->getContent(), true);
 
-        if (!$this->getFactory()->getCsrfTokenManager()->isTokenValid($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN])) {
+        if (
+            !isset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]) ||
+            !$this->getFactory()->getCsrfTokenManager()->isTokenValid(
+                new CsrfToken(static::CSRF_TOKEN_ID, $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]),
+            )
+        ) {
             return $this->createAjaxErrorResponse([
                 'error' => 'form.csrf.error.text',
             ], HttpCode::BAD_REQUEST);
