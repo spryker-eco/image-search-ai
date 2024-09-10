@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\ImageSearchAi\Controller;
 
-use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\ImageSearchFindTermsErrorMessageTransfer;
 use Generated\Shared\Transfer\ImageSearchFindTermsErrorResponseTransfer;
 use Generated\Shared\Transfer\ImageSearchFindTermsResponseTransfer;
@@ -57,7 +56,7 @@ class ImageSearchController extends AbstractController
         ) {
             return $this->createAjaxErrorResponse([
                 'error' => 'form.csrf.error.text',
-            ], HttpCode::BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         unset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_TOKEN]);

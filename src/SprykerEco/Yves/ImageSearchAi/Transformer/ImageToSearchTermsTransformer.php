@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\ImageSearchAi\Transformer;
@@ -22,7 +22,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
     /**
      * @var \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig
      */
-    protected ImageSearchAiConfig $config;
+    protected ImageSearchAiConfig $imageSearchAiConfig;
 
     /**
      * @param \SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToOpenAiClientInterface $openAiClient
@@ -33,7 +33,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
         ImageSearchAiConfig $imageSearchAiConfig
     ) {
         $this->openAiClient = $openAiClient;
-        $this->config = $imageSearchAiConfig;
+        $this->imageSearchAiConfig = $imageSearchAiConfig;
     }
 
     /**
@@ -46,7 +46,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
         $openAiChatRequestTransfer = (new OpenAiChatRequestTransfer())->setPromptData([
             [
                 'type' => 'text',
-                'text' => 'Describe the most important characteristics of the main object you can identify in the image e.g. manufacturer, model, color, part number or any identification number that help me to find the product using a search engine. Your output must be ony a list of the product attributes. Remove the attribute names and keep only the values from your output and provide them in a single line.',
+                'text' => $this->imageSearchAiConfig->getOpenAiImageSearchPrompt(),
             ],
             [
                 'type' => 'image_url',
@@ -54,7 +54,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
                     'url' => $base64Image,
                 ],
             ],
-        ])->setModel($this->config->getOpenAiModel());
+        ])->setModel($this->imageSearchAiConfig->getOpenAiModel());
 
         return $this->openAiClient->chat($openAiChatRequestTransfer);
     }

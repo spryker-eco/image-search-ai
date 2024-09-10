@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerEco\Yves\ImageSearchAiWidget\Widget;
+namespace SprykerEco\Yves\ImageSearchAi\Widget;
 
 use Spryker\Yves\Kernel\Widget\AbstractWidget;
 
@@ -24,6 +24,6 @@ class ImageSearchAiWidget extends AbstractWidget
      */
     public static function getTemplate(): string
     {
-        return '@ImageSearchAiWidget/views/image-search-ai/image-search-ai.twig';
+        return '@ImageSearchAi/views/image-search-ai/image-search-ai.twig';
     }
 }
