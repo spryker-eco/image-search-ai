@@ -8,7 +8,7 @@ export default class ImageUploader extends Component {
         error: 'is-error',
     }
 
-    protected readyCallback(): void {}
+    protected readyCallback(): void { }
     protected init(): void {
         this.fields = [...this.querySelectorAll<HTMLInputElement>(`.${this.jsName}__file-input`)];
 
@@ -76,6 +76,12 @@ export default class ImageUploader extends Component {
                 body: JSON.stringify({ image, _token: this._token }),
             });
             const data = await response.json();
+
+            if (!data?.firstMatchProductUrl) {
+                this.classList.add(this.states.error);
+
+                return;
+            }
 
             window.location.href = data.firstMatchProductUrl;
         } catch (error) {
