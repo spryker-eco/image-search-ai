@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerEco\Yves\ImageSearchAi;
@@ -10,11 +10,8 @@ namespace SprykerEco\Yves\ImageSearchAi;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToCatalogClientBridge;
-use SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToCatalogClientInterface;
 use SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToOpenAiClientBridge;
-use SprykerEco\Yves\ImageSearchAi\Dependency\Client\ImageSearchAiToOpenAiClientInterface;
 use SprykerEco\Yves\ImageSearchAi\Dependency\Service\ImageSearchAiToUtilEncodingServiceBridge;
-use SprykerEco\Yves\ImageSearchAi\Dependency\Service\ImageSearchAiToUtilEncodingServiceInterface;
 
 /**
  * @method \SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig getConfig()
@@ -63,12 +60,9 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogClient(Container $container): Container
     {
-        $container->set(
-            static::CLIENT_CATALOG,
-            function (Container $container): ImageSearchAiToCatalogClientInterface {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
                 return new ImageSearchAiToCatalogClientBridge($container->getLocator()->catalog()->client());
-            },
-        );
+        });
 
         return $container;
     }
@@ -80,12 +74,9 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container->set(
-            static::SERVICE_UTIL_ENCODING,
-            function (Container $container): ImageSearchAiToUtilEncodingServiceInterface {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
                 return new ImageSearchAiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-            },
-        );
+        });
 
         return $container;
     }
@@ -97,12 +88,9 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOpenAiClient(Container $container): Container
     {
-        $container->set(
-            static::CLIENT_OPEN_AI,
-            function (Container $container): ImageSearchAiToOpenAiClientInterface {
+        $container->set(static::CLIENT_OPEN_AI, function (Container $container) {
                 return new ImageSearchAiToOpenAiClientBridge($container->getLocator()->openAi()->client());
-            },
-        );
+        });
 
         return $container;
     }
