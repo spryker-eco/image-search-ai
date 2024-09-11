@@ -30,16 +30,26 @@ class ImageSearchController extends AbstractController
      */
     public function findTermsAction(Request $request): JsonResponse
     {
+        $requestContent = (string)$request->getContent();
+
+        if (!$requestContent) {
+            return $this->createAjaxErrorResponse();
+        }
+
         $requestBodyContent = $this->getFactory()
             ->getUtilEncodingService()
-            ->decodeJson((string)$request->getContent(), true);
+            ->decodeJson($requestContent, true);
+
+        if (!is_array($requestBodyContent)) {
+            return $this->createAjaxErrorResponse();
+        }
 
         $isRequestValid = $this->getFactory()
             ->createImageSearchAiValidator()
             ->validate($requestBodyContent);
 
         if (!$isRequestValid) {
-            return $this->jsonResponse(['success' => false], Response::HTTP_BAD_REQUEST);
+            return $this->createAjaxErrorResponse();
         }
 
         $searchString = $this->getFactory()->createImageToSearchTermsTransformer()->transform(
@@ -61,5 +71,13 @@ class ImageSearchController extends AbstractController
                 ? Url::generate($searchResults['suggestionByType']['product_abstract'][0]['url'])->build()
                 : '',
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createAjaxErrorResponse(): JsonResponse
+    {
+        return $this->jsonResponse(['success' => false], Response::HTTP_BAD_REQUEST);
     }
 }

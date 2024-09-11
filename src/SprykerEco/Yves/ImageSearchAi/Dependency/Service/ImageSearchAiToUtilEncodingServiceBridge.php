@@ -28,9 +28,9 @@ class ImageSearchAiToUtilEncodingServiceBridge implements ImageSearchAiToUtilEnc
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array<mixed>|null
+     * @return object|array<mixed>|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): ?array
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array|object|null
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
