@@ -77,7 +77,7 @@ export default class ImageUploader extends Component {
                 body: JSON.stringify({ image, _token: this._token }),
             })).json();
 
-            if (data.success) {
+            if (!data.success) {
                 this.classList.add(this.states.error);
 
                 return;
