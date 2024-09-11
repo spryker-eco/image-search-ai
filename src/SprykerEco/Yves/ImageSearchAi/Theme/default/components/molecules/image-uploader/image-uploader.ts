@@ -5,6 +5,7 @@ export default class ImageUploader extends Component {
     protected fields: HTMLInputElement[];
     protected states = {
         loading: 'is-loading',
+        empty: 'is-empty',
         error: 'is-error',
     }
 
@@ -16,8 +17,7 @@ export default class ImageUploader extends Component {
     }
 
     protected mapEvents(): void {
-        this.classList.remove(this.states.error);
-        this.classList.remove(this.states.loading);
+        this.classList.remove(this.states.error, this.states.loading, this.states.empty);
 
         this.fields.forEach((field) => {
             field.addEventListener('change', this.onFileInputChange.bind(this));
@@ -67,18 +67,24 @@ export default class ImageUploader extends Component {
     }
 
     protected async sendRequest(image: string): Promise<void> {
+        this.classList.remove(this.states.error, this.states.empty);
         this.classList.add(this.states.loading);
 
         try {
-            const response = await fetch(this.action, {
+            const data = await (await fetch(this.action, {
                 method: 'POST',
                 signal: AbortSignal.timeout(this.timeout),
                 body: JSON.stringify({ image, _token: this._token }),
-            });
-            const data = await response.json();
+            })).json();
+
+            if (data.success) {
+                this.classList.add(this.states.error);
+
+                return;
+            }
 
             if (!data?.firstMatchProductUrl) {
-                this.classList.add(this.states.error);
+                this.classList.add(this.states.empty);
 
                 return;
             }

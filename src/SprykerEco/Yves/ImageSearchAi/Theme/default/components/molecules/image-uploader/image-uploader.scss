@@ -17,8 +17,14 @@
             }
         }
 
-        &.is-error & {
+        &.is-empty & {
             &__service-message {
+                display: block;
+            }
+        }
+
+        &.is-error & {
+            &__error {
                 display: block;
             }
         }
@@ -30,6 +36,7 @@
             translate: -50%;
         }
 
+        &__error,
         &__spinner,
         &__service-message {
             display: none;

@@ -39,8 +39,14 @@
         </div>
 
         {% block empty %}
-            <div class="text-center {{ config.name }}__service-message">
+            <div class="text-center spacing-y spacing-y--big {{ config.name }}__service-message">
                 {{ 'search.with.your-images.no-results' | trans }}
+            </div>
+        {% endblock %}
+
+        {% block error %}
+            <div class="text-center spacing-y spacing-y--big {{ config.name }}__error">
+                {{ 'search.with.your-images.error' | trans }}
             </div>
         {% endblock %}
     {% endblock %}
