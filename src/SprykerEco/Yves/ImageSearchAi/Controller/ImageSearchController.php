@@ -52,18 +52,18 @@ class ImageSearchController extends AbstractController
             return $this->createAjaxErrorResponse();
         }
 
-        $searchString = $this->getFactory()->createImageToSearchTermsTransformer()->transform(
+        $openAiChatResponseTransfer = $this->getFactory()->createImageToSearchTermsTransformer()->transform(
             $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_IMAGE],
-        )->getMessage();
+        );
 
-        if (!$searchString) {
+        if (!$openAiChatResponseTransfer->getIsSuccessful() || !$openAiChatResponseTransfer->getMessage()) {
             return $this->jsonResponse();
         }
 
         $searchResults = $this
             ->getFactory()
             ->getCatalogClient()
-            ->catalogSuggestSearch($searchString, []);
+            ->catalogSuggestSearch($openAiChatResponseTransfer->getMessage());
 
         return new JsonResponse([
             'success' => true,
