@@ -1,17 +1,12 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ImageSearchFindTermsResponse" strict="true">
-        <property name="searchUrl" type="string"/>
-        <property name="firstMatchProductUrl" type="string"/>
+    <transfer name="OpenAiChatRequest" strict="true">
+        <property name="promptData" type="array"/>
+        <property name="model" type="string"/>
     </transfer>
 
-    <transfer name="ImageSearchFindTermsErrorResponse" strict="true">
-        <property name="error" type="string"/>
-        <property name="messages" type="ImageSearchFindTermsErrorMessage[]" singular="ImageSearchFindTermsErrorMessage"/>
-    </transfer>
-
-    <transfer name="ImageSearchFindTermsErrorMessage" strict="true">
+    <transfer name="OpenAiChatResponse" strict="true">
         <property name="message" type="string"/>
     </transfer>
 

@@ -45,6 +45,8 @@ class ImageSearchAiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addCatalogClient($container);
         $container = $this->addOpenAiClient($container);
         $container = $this->addUtilEncodingService($container);
