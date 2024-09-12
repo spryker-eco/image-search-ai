@@ -1,0 +1,51 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'image-uploader-popup',
+} %}
+
+{% define data = {
+    icon: 'file-image',
+    text: null,
+    id: random('abcdefghijklmnopqrstuvwxyz') ~ random(),
+} %}
+
+{% block content %}
+    {% include molecule('image-uploader', 'ImageSearchAi') only %}
+{% endblock %}
+
+{% block body %}
+    {% set triggerClassName = "#{config.jsName}__button--image-search-#{data.id}" %}
+
+    {% block trigger %}
+        <button type="button" class="button button--hollow {{ config.name }}__button {{ triggerClassName }}">
+            {% if data.text %}
+                {{ data.text }}
+            {% else %}
+                {% include atom('icon') with {
+                    modifiers: modifiers,
+                    data: {
+                        name: data.icon,
+                    },
+                } only %}
+            {% endif %}
+        </button>
+    {% endblock %}
+
+    {% block popup %}
+        {% include molecule('main-popup') with {
+            modifiers: modifiers,
+            class: "#{config.jsName}__popup",
+            data: {
+                title: 'search.with.your-images.title' | trans,
+                content: block('content'),
+            },
+            attributes: {
+                'content-id': "#{config.jsName}__popup-content-#{data.id}",
+                'trigger-class-name': triggerClassName,
+                'has-content-mount': true,
+                'has-content-reload': true,
+            },
+        } only %}
+    {% endblock %}
+{% endblock %}

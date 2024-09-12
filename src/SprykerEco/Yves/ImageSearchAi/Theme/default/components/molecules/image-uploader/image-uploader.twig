@@ -1,0 +1,78 @@
+{% extends model('component') %}
+
+{% define config = {
+    name: 'image-uploader',
+    tag: 'image-uploader',
+} %}
+
+{% define attributes = {
+    action: '/search-ai/image',
+    _token: csrf_token('image_search_ai_csrf'),
+} %}
+
+{% block body %}
+    {% block preview %}
+        <div class="is-position-relative {{ config.name }}__image-wrapper text-center">
+            {% embed molecule('lazy-image') with {
+                modifiers: ['small'],
+                data: {
+                    imageSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADb0lEQVR4nO2av08UQRTHPxhiI2phbGzwd+NfIBYKFlZ2GAoJJZQWRm1ttbNS6C3VoA3JSWi0wVq0sjVRDFGJjcQzk8wll8ns7e7c7t3bu+8neQnczd4O8+G9Nzd3IIQQQgghhBBCCFu0FVhag6FPQIGEtA3/Iwx9Agp6CxGDJTdDxGCREGNIiDEkxBgSYgwJMYaEGENCjCEhxpAQY0iIMSSkBNeBNeATsO/D/bwKzFENElKA88BWgZPoTeAc/SEhOVwBdkt8LODGzpCOhPTgDPAt4TOaHz6rUpCQHsTK1EvgKnDExzXgVWTcW9KQkB4NPFyce1mDgfuR8bOUR0IyWItkRh7rwTXPKI+EZPA5WBxXpvKYDa5xW+KySEgGv4PFmSKfo8E17jXKIiEZ/EoQciy45ieGhUwyfiVrx6qQBWADmKA5rAbr4La2ebwOrnlqUYiT8de/1grNYS6yFm5rm8WDyHj3HsWUkG4ZbV+Xp2kOm5H1WPelacrHXCQzXLQS71mbkFuBjE5sNqh0nU48Otnt45CxFiFhZoTRpNI1U/Jw8TtwuY/7VS4kT0YTS9dZfzaVJ6PlDySxIiQmw/1+N7KvbzWodHWY9cchO/5Nn4uP/rGUBl6rkFjPOABu++dXGl66BkUlQvJk4LNhIxiz78uBqFBIERkdpiOlq0m7LvNCsnqGezyLWOlaLjjZCeAko02ykDKZQWLpOgXcBB4Cb/yW0t1jkdElSUhKZuSVrpaX/MhvMfd6bC/L3GvkhaRmRpHSVSYORjRTSgmpSkZW6ZIUigvpt0wVLV3dsefL12N/n+Ua5tBIIVVmRshy16dr74AnwBJwCTgUGT+fMZfFcRFSR2aEpavs+c/CCGdKrhCrf/iC4bnVKqSOMlUV8wVOlvPiD3CHBgqxJqNKKS5eACdoiBCrMqqW8hW4gXEh1mVULeWf3+kdxqiQpjfJXlwAtjPEbPvnzQkZdSb94eWBkYY/9kI6uC8mfDHQ8CWki+PA8yE3fAmJsBT59vugGr6EZOCOc95nZMsH4CL1ICGJDX9QMXa7rH4bvoQYbPjKEIMNXyVrRFEPMYaEGENCjCEhxpAQY0iIMSTEGBJiDAkxhoQYQ0KMISHGkBBjSIgxJKRpQhQMdQ0kAFtrMPQJKJCQtuF/BCGEEEIIIYQQQmCF/43qyUAhbVxQAAAAAElFTkSuQmCC',
+                    imageTitle: 'image-preview',
+                },
+                embed: {
+                    jsName: config.jsName,
+                },
+            } only %}
+                {% block content %}
+                    {% set imageExtraClasses = "#{embed.jsName}__image-placeholder" %}
+                    {{ parent() }}
+                {% endblock %}
+            {% endembed %}
+
+            {% include atom('icon') with {
+                modifiers: ['spinner', 'big'],
+                class: "#{config.name}__spinner",
+                data: {
+                    name: 'spinner',
+                },
+            } only %}
+        </div>
+
+        {% block empty %}
+            <div class="text-center spacing-y spacing-y--big {{ config.name }}__service-message">
+                {{ 'search.with.your-images.no-results' | trans }}
+            </div>
+        {% endblock %}
+
+        {% block error %}
+            <div class="text-center spacing-y spacing-y--big {{ config.name }}__error">
+                {{ 'search.with.your-images.error' | trans }}
+            </div>
+        {% endblock %}
+    {% endblock %}
+
+    {% block info %}
+        <h5 class="text-center spacing-y spacing-y--big {{ config.name }}__info">{{ 'search.with.your-images.content' | trans }}</h5>
+    {% endblock %}
+
+    {% block actions %}
+        <div class="grid grid--with-gutter">
+            <div class="col col--with-gutter col--expand is-hidden-lg-xl">
+                <label>
+                    <input class="{{ config.name }}__file-input {{ config.jsName }}__file-input is-hidden" type="file" accept="image/*" capture="environment">
+                    <span tabindex="0" class="{{ config.name }}__file-input-trigger button button--expand">
+                        {{ 'search.with.your.images.photo.button' | trans  }}
+                    </span>
+                </label>
+            </div>
+            <div class="col col--with-gutter col--expand">
+                <label>
+                    <input class="{{ config.name }}__file-input {{ config.jsName }}__file-input is-hidden" type="file" accept="image/*">
+                    <span tabindex="0" class="{{ config.name }}__file-input-button button button--expand">
+                        {{ 'search.with.your-images.button' | trans }}
+                    </span>
+                </label>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
