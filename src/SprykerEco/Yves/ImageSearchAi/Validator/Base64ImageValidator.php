@@ -84,7 +84,6 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
                 ->addViolation();
         }
 
-        /** @var string $tmpFilename */
         $tmpFilename = tempnam(sys_get_temp_dir(), 'guessMimeType_');
         file_put_contents($tmpFilename, $decodedFile);
         $mimeTypes = new MimeTypes();
