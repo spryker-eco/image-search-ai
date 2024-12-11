@@ -1,8 +1,8 @@
 <?php
 
 /**
- * MIT License
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerEco\Yves\ImageSearchAi\Validator;
@@ -38,7 +38,7 @@ class ImageSearchAiValidator implements ImageSearchAiValidatorInterface
      */
     public function __construct(
         CsrfTokenManagerInterface $csrfTokenManager,
-        Base64ImageValidatorInterface $base64ImageValidator
+        Base64ImageValidatorInterface $base64ImageValidator,
     ) {
         $this->csrfTokenManager = $csrfTokenManager;
         $this->base64ImageValidator = $base64ImageValidator;
