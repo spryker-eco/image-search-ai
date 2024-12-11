@@ -1,8 +1,8 @@
 <?php
 
 /**
- * MIT License
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerEco\Yves\ImageSearchAi\Validator;
@@ -84,7 +84,6 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
                 ->addViolation();
         }
 
-        /** @var string $tmpFilename */
         $tmpFilename = tempnam(sys_get_temp_dir(), 'guessMimeType_');
         file_put_contents($tmpFilename, $decodedFile);
         $mimeTypes = new MimeTypes();
