@@ -38,7 +38,7 @@ class ImageSearchAiValidator implements ImageSearchAiValidatorInterface
      */
     public function __construct(
         CsrfTokenManagerInterface $csrfTokenManager,
-        Base64ImageValidatorInterface $base64ImageValidator,
+        Base64ImageValidatorInterface $base64ImageValidator
     ) {
         $this->csrfTokenManager = $csrfTokenManager;
         $this->base64ImageValidator = $base64ImageValidator;

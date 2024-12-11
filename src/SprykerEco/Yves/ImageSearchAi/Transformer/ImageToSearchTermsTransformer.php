@@ -30,7 +30,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
      */
     public function __construct(
         ImageSearchAiToOpenAiClientInterface $openAiClient,
-        ImageSearchAiConfig $imageSearchAiConfig,
+        ImageSearchAiConfig $imageSearchAiConfig
     ) {
         $this->openAiClient = $openAiClient;
         $this->imageSearchAiConfig = $imageSearchAiConfig;

@@ -34,7 +34,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
      */
     public function __construct(
         ValidatorInterface $validator,
-        ImageSearchAiConfig $imageSearchAiConfig,
+        ImageSearchAiConfig $imageSearchAiConfig
     ) {
         $this->validator = $validator;
         $this->imageSearchAiConfig = $imageSearchAiConfig;
