@@ -1,4 +1,4 @@
-@mixin image-search-ai-image-uploader($name: '.image-uploader') {
+@mixin image-search-ai-image-uploader($name: '.image-search-ai-image-uploader') {
     #{$name} {
         &.is-loading & {
             &__spinner {
@@ -16,6 +16,7 @@
                 opacity: 0.5;
             }
         }
+
 
         &.is-empty & {
             &__service-message {
