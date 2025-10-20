@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerEco\Yves\ImageSearchAi\Validator;
 
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -38,7 +40,7 @@ class ImageSearchAiValidator implements ImageSearchAiValidatorInterface
      */
     public function __construct(
         CsrfTokenManagerInterface $csrfTokenManager,
-        Base64ImageValidatorInterface $base64ImageValidator
+        Base64ImageValidatorInterface $base64ImageValidator,
     ) {
         $this->csrfTokenManager = $csrfTokenManager;
         $this->base64ImageValidator = $base64ImageValidator;

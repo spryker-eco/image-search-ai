@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerEco\Yves\ImageSearchAi\Transformer;
 
 use Generated\Shared\Transfer\OpenAiChatRequestTransfer;
@@ -30,7 +32,7 @@ class ImageToSearchTermsTransformer implements ImageToSearchTermsTransformerInte
      */
     public function __construct(
         ImageSearchAiToOpenAiClientInterface $openAiClient,
-        ImageSearchAiConfig $imageSearchAiConfig
+        ImageSearchAiConfig $imageSearchAiConfig,
     ) {
         $this->openAiClient = $openAiClient;
         $this->imageSearchAiConfig = $imageSearchAiConfig;

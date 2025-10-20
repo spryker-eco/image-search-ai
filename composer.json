@@ -4,7 +4,7 @@
     "description": "ImageSearchAi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "spryker-eco/open-ai": "^0.2.0",
         "spryker/catalog": "^5.0.0",
         "spryker/kernel": "^3.73.0",
@@ -41,8 +41,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "php-http/discovery": false
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

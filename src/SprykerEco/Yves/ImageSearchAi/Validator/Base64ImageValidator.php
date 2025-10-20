@@ -5,6 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+declare(strict_types = 1);
+
 namespace SprykerEco\Yves\ImageSearchAi\Validator;
 
 use SprykerEco\Yves\ImageSearchAi\ImageSearchAiConfig;
@@ -34,7 +36,7 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
      */
     public function __construct(
         ValidatorInterface $validator,
-        ImageSearchAiConfig $imageSearchAiConfig
+        ImageSearchAiConfig $imageSearchAiConfig,
     ) {
         $this->validator = $validator;
         $this->imageSearchAiConfig = $imageSearchAiConfig;
@@ -90,14 +92,16 @@ class Base64ImageValidator implements Base64ImageValidatorInterface
         $mimeType = $mimeTypes->guessMimeType($tmpFilename);
         unlink($tmpFilename);
 
-        if (!in_array($mimeType, $this->imageSearchAiConfig->getAllowedMimeTypes(), true)) {
-            $context->buildViolation(sprintf(
-                'Invalid mime type %s. Accepted types are %s.',
-                $mimeType,
-                implode(', ', $this->imageSearchAiConfig->getAllowedMimeTypes()),
-            ))
-                ->atPath('image')
-                ->addViolation();
+        if (in_array($mimeType, $this->imageSearchAiConfig->getAllowedMimeTypes(), true)) {
+            return;
         }
+
+        $context->buildViolation(sprintf(
+            'Invalid mime type %s. Accepted types are %s.',
+            $mimeType,
+            implode(', ', $this->imageSearchAiConfig->getAllowedMimeTypes()),
+        ))
+            ->atPath('image')
+            ->addViolation();
     }
 }
